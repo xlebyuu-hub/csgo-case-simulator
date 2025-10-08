@@ -290,6 +290,38 @@
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
   }
+
+  /* Промокод */
+  .promo-container {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+  }
+  
+  .promo-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #3a3a5a;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 120px;
+  }
+  
+  .promo-btn {
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .promo-btn:hover {
+    transform: scale(1.05);
+  }
   
   /* Стили для кейсов */
   .cases-container {
@@ -372,6 +404,29 @@
   .open-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(138, 109, 255, 0.5);
+  }
+
+  /* Селектор количества кейсов */
+  .amount-selector {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .amount-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #3a3a5a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+  }
+  
+  .amount-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
   }
   
   /* Профиль */
@@ -463,8 +518,8 @@
   /* Инвентарь */
   .inventory {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
     margin-top: 25px;
   }
   
@@ -722,7 +777,7 @@
     background: rgba(255, 255, 255, 0.2);
   }
   
-  /* Анимация открытия кейса */
+  /* Анимация открытия кейса - УЛУЧШЕННАЯ */
   .case-opening {
     position: fixed;
     top: 0;
@@ -804,9 +859,9 @@
     box-shadow: 0 6px 12px rgba(138, 109, 255, 0.5);
   }
   
-  /* Анимация прокрутки кейса */
+  /* УЛУЧШЕННАЯ анимация прокрутки кейса */
   .case-scroll {
-    height: 120px;
+    height: 140px;
     overflow: hidden;
     position: relative;
     margin: 25px 0;
@@ -826,8 +881,8 @@
   }
   
   .scroll-item {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -836,6 +891,54 @@
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     border: 1px solid #3a3a5a;
+    transition: all 0.3s ease;
+  }
+  
+  .scroll-item.highlighted {
+    transform: scale(1.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(138, 109, 255, 0.5);
+  }
+  
+  /* Множественное открытие */
+  .multi-open-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .multi-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #3a3a5a;
+  }
+  
+  /* Аудио контролы */
+  .audio-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+  }
+  
+  .audio-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #3a3a5a;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  
+  .audio-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
   
   /* Футер */
@@ -909,6 +1012,11 @@
     box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
   }
   
+  .notification.warning {
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+  }
+  
   @keyframes slideIn {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
@@ -936,29 +1044,47 @@
     100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
   }
   
-  /* Адаптивность */
+  /* Адаптивность - УЛУЧШЕННАЯ */
   @media (max-width: 768px) {
     .cases-container {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
     }
     
     .inventory {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
     }
     
     header {
       flex-direction: column;
       padding: 10px;
+      gap: 10px;
     }
     
     .header-left, .header-right {
       width: 100%;
       justify-content: center;
-      margin: 5px 0;
+    }
+    
+    .logo {
+      margin-right: 0;
+      margin-bottom: 10px;
     }
     
     .tab {
       padding: 12px 15px;
+      font-size: 14px;
+    }
+    
+    .balance-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .promo-container {
+      margin-left: 0;
+      justify-content: center;
     }
     
     .footer-content {
@@ -982,12 +1108,58 @@
     .payment-methods {
       grid-template-columns: 1fr;
     }
+    
+    .case-reveal {
+      padding: 20px;
+      margin: 10px;
+    }
+    
+    .scroll-item {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .case-scroll {
+      height: 120px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .content {
+      padding: 15px;
+    }
+    
+    .cases-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .inventory {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .case-image {
+      height: 150px;
+    }
+    
+    .amount-selector {
+      justify-content: center;
+    }
+    
+    .audio-controls {
+      bottom: 10px;
+      right: 10px;
+    }
   }
 </style>
 </head>
 <body>
 <!-- Анимированный фон -->
 <div class="bg-animation" id="bgAnimation"></div>
+
+<!-- Аудио контролы -->
+<div class="audio-controls">
+  <button class="audio-btn" onclick="toggleSound()">🔊</button>
+</div>
 
 <!-- Уведомление -->
 <div class="notification" id="notification"></div>
@@ -1043,7 +1215,6 @@
     <!-- Оплата промо-кодом -->
     <div class="payment-inputs" id="codePayment">
       <input type="text" class="payment-input" id="promoCode" placeholder="Введите промо-код">
-      <input type="text" class="payment-input" id="phoneNumber" placeholder="Номер телефона">
     </div>
     
     <button class="payment-btn" onclick="processPayment()">Пополнить</button>
@@ -1061,6 +1232,10 @@
     </div>
     <div class="header-right">
       <div class="balance">Баланс: <span id="balance">0</span> ₽</div>
+      <div class="promo-container">
+        <input type="text" class="promo-input" id="promoInput" placeholder="Промокод" maxlength="10">
+        <button class="promo-btn" onclick="activatePromo()">Активировать</button>
+      </div>
       <button class="add-balance-btn" onclick="showPaymentModal()">+ Пополнить</button>
       <div class="user-info">
         <div class="user-avatar" id="userAvatar">👤</div>
@@ -1079,45 +1254,7 @@
     </div>
     
     <div class="cases-container">
-      <div class="case" onclick="showCaseInfo('prisma')">
-        <div class="case-image" style="background-image: url('https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA')">
-          <div class="case-name">Prisma Case</div>
-        </div>
-        <div class="case-info">
-          <div class="case-price">75 ₽</div>
-          <button class="open-btn" onclick="event.stopPropagation(); openCase('prisma')">Открыть</button>
-        </div>
-      </div>
-      
-      <div class="case" onclick="showCaseInfo('gamma')">
-        <div class="case-image" style="background-image: url('https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA')">
-          <div class="case-name">Gamma Case</div>
-        </div>
-        <div class="case-info">
-          <div class="case-price">120 ₽</div>
-          <button class="open-btn" onclick="event.stopPropagation(); openCase('gamma')">Открыть</button>
-        </div>
-      </div>
-      
-      <div class="case" onclick="showCaseInfo('chroma')">
-        <div class="case-image" style="background-image: url('https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA')">
-          <div class="case-name">Chroma Case</div>
-        </div>
-        <div class="case-info">
-          <div class="case-price">95 ₽</div>
-          <button class="open-btn" onclick="event.stopPropagation(); openCase('chroma')">Открыть</button>
-        </div>
-      </div>
-      
-      <div class="case" onclick="showCaseInfo('fracture')">
-        <div class="case-image" style="background-image: url('https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA')">
-          <div class="case-name">Fracture Case</div>
-        </div>
-        <div class="case-info">
-          <div class="case-price">65 ₽</div>
-          <button class="open-btn" onclick="event.stopPropagation(); openCase('fracture')">Открыть</button>
-        </div>
-      </div>
+      <!-- Кейсы будут добавляться динамически -->
     </div>
   </div>
 
@@ -1157,7 +1294,7 @@
     </div>
   </div>
 
-  <!-- Окно открытия кейса -->
+  <!-- Окно открытия кейса - УЛУЧШЕННОЕ -->
   <div class="case-opening" id="caseOpening">
     <div class="case-reveal">
       <h2 id="openingCaseName">Открытие кейса</h2>
@@ -1174,29 +1311,9 @@
           <div class="item-price" id="revealedPrice"></div>
         </div>
       </div>
-      <p>Поздравляем! Вы получили новый предмет!</p>
+      <div id="multiOpenResults" class="multi-open-results" style="display: none;"></div>
+      <p id="openingResultText">Поздравляем! Вы получили новый предмет!</p>
       <button class="close-reveal" onclick="closeCaseOpening()">Закрыть</button>
-    </div>
-  </div>
-
-  <!-- Модальное окно информации о кейсе -->
-  <div class="modal" id="caseInfoModal">
-    <div class="modal-content">
-      <div class="case-info-header">
-        <div class="case-info-image" id="modalCaseImage"></div>
-        <div>
-          <h2 id="modalCaseName">Prisma Case</h2>
-          <p id="modalCaseDescription">Кейс содержит коллекцию оружия из набора Prisma</p>
-          <p>Стоимость: <span id="modalCasePrice">75</span> ₽</p>
-        </div>
-      </div>
-      
-      <h3>Возможные выпадения:</h3>
-      <div class="case-drops" id="caseDrops">
-        <!-- Предметы кейса добавляются динамически -->
-      </div>
-      
-      <button class="close-modal" onclick="closeCaseInfo()">Закрыть</button>
     </div>
   </div>
 
@@ -1217,75 +1334,134 @@
 </div>
 
 <script>
-  // Данные о кейсах и предметах
+  // 🔊 Звуковая система
+  const sounds = {
+    caseOpen: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-show-option-select-1241.mp3'),
+    caseScroll: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-coin-insert-1250.mp3'),
+    win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
+    click: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3'),
+    background: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-show-suspense-waiting-667.mp3')
+  };
+
+  // Настройки звуков
+  Object.values(sounds).forEach(sound => {
+    sound.volume = 0.3;
+    sound.preload = 'auto';
+  });
+  
+  sounds.background.loop = true;
+  sounds.background.volume = 0.1;
+
+  let soundEnabled = true;
+
+  function playSound(soundName) {
+    if (!soundEnabled) return;
+    const sound = sounds[soundName];
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play().catch(e => console.log('Audio play failed:', e));
+    }
+  }
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const btn = document.querySelector('.audio-btn');
+    btn.textContent = soundEnabled ? '🔊' : '🔇';
+    
+    if (!soundEnabled) {
+      sounds.background.pause();
+    } else {
+      sounds.background.play().catch(e => console.log('Background audio play failed'));
+    }
+    
+    showNotification(soundEnabled ? '🔊 Звук включен' : '🔇 Звук выключен');
+  }
+
+  // Данные о кейсах и предметах с РЕАЛЬНЫМИ картинками
   const casesData = {
     prisma: {
       name: "Prisma Case",
       price: 75,
-      image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA",
+      image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f",
       description: "Кейс содержит коллекцию оружия из набора Prisma с уникальными скинами.",
       items: [
-        { name: "AK-47 | The Empress", rarity: "classified", price: 1500, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "M4A1-S | Nightmare", rarity: "classified", price: 1200, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "USP-S | Cortex", rarity: "restricted", price: 300, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "Desert Eagle | Mecha Industries", rarity: "milspec", price: 100, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "AWP | Atheris", rarity: "covert", price: 2500, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" }
+        { name: "AK-47 | The Empress", rarity: "legendary", price: 1500, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "M4A1-S | Nightmare", rarity: "legendary", price: 1200, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "USP-S | Cortex", rarity: "mythical", price: 300, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "Desert Eagle | Mecha Industries", rarity: "rare", price: 100, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "AWP | Atheris", rarity: "ancient", price: 2500, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" }
       ]
     },
     gamma: {
       name: "Gamma Case",
       price: 120,
-      image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA",
+      image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f",
       description: "Кейс содержит коллекцию оружия из набора Gamma с уникальными скинами.",
       items: [
-        { name: "AK-47 | Fuel Injector", rarity: "classified", price: 1800, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "M4A4 | Desolate Space", rarity: "classified", price: 1500, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "USP-S | Kill Confirmed", rarity: "covert", price: 3000, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "Glock-18 | Water Elemental", rarity: "milspec", price: 80, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "AWP | Hyper Beast", rarity: "covert", price: 2800, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" }
+        { name: "AK-47 | Fuel Injector", rarity: "legendary", price: 1800, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "M4A4 | Desolate Space", rarity: "legendary", price: 1500, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "USP-S | Kill Confirmed", rarity: "ancient", price: 3000, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "Glock-18 | Water Elemental", rarity: "rare", price: 80, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "AWP | Hyper Beast", rarity: "ancient", price: 2800, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" }
       ]
     },
     chroma: {
       name: "Chroma Case",
       price: 95,
-      image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA",
+      image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f",
       description: "Кейс содержит коллекцию оружия из набора Chroma с уникальными скинами.",
       items: [
-        { name: "AK-47 | Cartel", rarity: "classified", price: 800, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "M4A4 | Dragon King", rarity: "classified", price: 1200, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "P90 | Asiimov", rarity: "covert", price: 1500, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "Glock-18 | Reactor", rarity: "restricted", price: 200, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "AWP | Man-o'-war", rarity: "classified", price: 900, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" }
+        { name: "AK-47 | Cartel", rarity: "mythical", price: 800, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "M4A4 | Dragon King", rarity: "legendary", price: 1200, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "P90 | Asiimov", rarity: "ancient", price: 1500, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "Glock-18 | Reactor", rarity: "uncommon", price: 200, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "AWP | Man-o'-war", rarity: "mythical", price: 900, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" }
       ]
     },
     fracture: {
       name: "Fracture Case",
       price: 65,
-      image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA",
+      image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f",
       description: "Кейс содержит коллекцию оружия из набора Fracture с уникальными скинами.",
       items: [
-        { name: "AK-47 | Legion of Anubis", rarity: "covert", price: 2200, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "M4A1-S | Printstream", rarity: "covert", price: 3500, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "Desert Eagle | Printstream", rarity: "classified", price: 1800, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "MP9 | Modest Threat", rarity: "restricted", price: 250, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" },
-        { name: "AWP | Containment Breach", rarity: "classified", price: 1200, image: "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA" }
+        { name: "AK-47 | Legion of Anubis", rarity: "ancient", price: 2200, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "M4A1-S | Printstream", rarity: "ancient", price: 3500, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "Desert Eagle | Printstream", rarity: "legendary", price: 1800, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "MP9 | Modest Threat", rarity: "uncommon", price: 250, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" },
+        { name: "AWP | Containment Breach", rarity: "mythical", price: 1200, image: "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH_t26q4yZlvDmJ4Tdn2xZ18l4j_vT8oWk2wXn_0E6Z2r2J4Wccw45YVvQ-lO_xr3p15-70ZvJzn5i6XMn5XqOmUPkgV9HMMUY0LIcOJH69r-BTA/360fx360f" }
       ]
     }
   };
 
+  // Промокоды
+  const promoCodes = {
+    'ZXC': { bonus: 1000, used: false },
+    'WELCOME': { bonus: 500, used: false },
+    'CSGO': { bonus: 300, used: false }
+  };
+
   // Переменные состояния
-  let balance = 0;
+  let balance = 1000;
   let inventory = [];
   let openedCases = 0;
   let totalSpent = 0;
   let selectedItem = null;
   let currentUser = null;
   let currentPaymentMethod = 'card';
+  let currentCaseAmount = 1;
 
   // Инициализация при загрузке страницы
   document.addEventListener('DOMContentLoaded', function() {
     createBackgroundAnimation();
     checkAuthStatus();
+    renderCases();
+    
+    // Запускаем фоновую музыку
+    setTimeout(() => {
+      if (soundEnabled) {
+        sounds.background.play().catch(e => console.log('Background music auto-play blocked'));
+      }
+    }, 1000);
   });
 
   // Создание анимированного фона
@@ -1331,6 +1507,7 @@
 
   // Вход через Steam (симуляция)
   function steamLogin() {
+    playSound('click');
     const steamUsers = [
       { id: 1, name: "CyberPlayer", avatar: "👾", level: 32 },
       { id: 2, name: "ProGamer", avatar: "🎮", level: 45 },
@@ -1349,11 +1526,12 @@
     localStorage.setItem('csgoUser', JSON.stringify(currentUser));
     loadGameData();
     showMainInterface();
-    showNotification(`Добро пожаловать, ${currentUser.name}!`);
+    showNotification(`🎮 Добро пожаловать, ${currentUser.name}! Бонус 1000₽ уже на счету!`);
   }
 
   // Ручной вход
   function manualLogin() {
+    playSound('click');
     const login = document.getElementById('loginInput').value;
     const password = document.getElementById('passwordInput').value;
     
@@ -1373,11 +1551,12 @@
     localStorage.setItem('csgoUser', JSON.stringify(currentUser));
     loadGameData();
     showMainInterface();
-    showNotification(`Добро пожаловать, ${currentUser.name}!`);
+    showNotification(`🎮 Добро пожаловать, ${currentUser.name}! Бонус 1000₽ уже на счету!`);
   }
 
   // Выход
   function logout() {
+    playSound('click');
     currentUser = null;
     localStorage.removeItem('csgoUser');
     localStorage.removeItem('csgoCaseSimulator');
@@ -1402,7 +1581,8 @@
       balance: balance,
       inventory: inventory,
       openedCases: openedCases,
-      totalSpent: totalSpent
+      totalSpent: totalSpent,
+      promoCodes: promoCodes
     };
     localStorage.setItem('csgoCaseSimulator', JSON.stringify(gameData));
   }
@@ -1414,10 +1594,19 @@
     const savedData = localStorage.getItem('csgoCaseSimulator');
     if (savedData) {
       const gameData = JSON.parse(savedData);
-      balance = gameData.balance || 0;
+      balance = gameData.balance || 1000;
       inventory = gameData.inventory || [];
       openedCases = gameData.openedCases || 0;
       totalSpent = gameData.totalSpent || 0;
+      
+      // Восстанавливаем промокоды
+      if (gameData.promoCodes) {
+        Object.keys(gameData.promoCodes).forEach(code => {
+          if (promoCodes[code]) {
+            promoCodes[code].used = gameData.promoCodes[code].used;
+          }
+        });
+      }
     }
     
     updateBalanceOnAllTabs();
@@ -1439,6 +1628,8 @@
 
   // Функция переключения вкладок
   function showTab(tabName) {
+    playSound('click');
+    
     // Скрыть все вкладки контента
     document.getElementById('casesContent').style.display = 'none';
     document.getElementById('profileContent').style.display = 'none';
@@ -1479,151 +1670,122 @@
     document.getElementById('profileBalance').textContent = balance;
   }
 
-  // Показать модальное окно оплаты
-  function showPaymentModal() {
-    document.getElementById('paymentModal').classList.add('active');
-  }
-
-  // Закрыть модальное окно оплаты
-  function closePaymentModal() {
-    document.getElementById('paymentModal').classList.remove('active');
-  }
-
-  // Выбор метода оплаты
-  function selectPaymentMethod(method) {
-    currentPaymentMethod = method;
+  // Рендер кейсов
+  function renderCases() {
+    const casesContainer = document.querySelector('.cases-container');
+    casesContainer.innerHTML = '';
     
-    // Убрать активный класс со всех методов
-    document.querySelectorAll('.payment-method').forEach(el => {
-      el.classList.remove('active');
+    Object.keys(casesData).forEach(caseKey => {
+      const caseData = casesData[caseKey];
+      const caseElement = document.createElement('div');
+      caseElement.className = 'case';
+      caseElement.innerHTML = `
+        <div class="case-image" style="background-image: url('${caseData.image}')">
+          <div class="case-name">${caseData.name}</div>
+        </div>
+        <div class="case-info">
+          <div class="case-price">${caseData.price} ₽</div>
+          <div class="amount-selector">
+            <button class="amount-btn ${currentCaseAmount === 1 ? 'active' : ''}" data-amount="1">1x</button>
+            <button class="amount-btn ${currentCaseAmount === 3 ? 'active' : ''}" data-amount="3">3x</button>
+            <button class="amount-btn ${currentCaseAmount === 5 ? 'active' : ''}" data-amount="5">5x</button>
+            <button class="amount-btn ${currentCaseAmount === 10 ? 'active' : ''}" data-amount="10">10x</button>
+          </div>
+          <button class="open-btn" onclick="openCase('${caseKey}')">Открыть</button>
+        </div>
+      `;
+      casesContainer.appendChild(caseElement);
     });
-    
-    // Добавить активный класс выбранному методу
-    event.target.closest('.payment-method').classList.add('active');
-    
-    // Показать соответствующие поля ввода
-    document.querySelectorAll('.payment-inputs').forEach(el => {
-      el.classList.remove('active');
+
+    // Добавляем обработчики для кнопок количества
+    document.querySelectorAll('.amount-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentCaseAmount = parseInt(this.dataset.amount);
+        playSound('click');
+      });
     });
-    document.getElementById(method + 'Payment').classList.add('active');
   }
-
-  // Обработка платежа
-  function processPayment() {
-    if (currentPaymentMethod === 'card') {
-      const cardNumber = document.getElementById('cardNumber').value;
-      const cardExpiry = document.getElementById('cardExpiry').value;
-      const cardCvc = document.getElementById('cardCvc').value;
-      const amount = parseInt(document.getElementById('cardAmount').value) || 0;
-      
-      if (!cardNumber || !cardExpiry || !cardCvc) {
-        showNotification('Заполните все поля карты', 'error');
-        return;
-      }
-      
-      if (amount < 10) {
-        showNotification('Минимальная сумма пополнения 10 ₽', 'error');
-        return;
-      }
-      
-      // Симуляция успешной оплаты
-      balance += amount;
-      updateBalanceOnAllTabs();
-      updateProfileStats();
-      saveGameData();
-      closePaymentModal();
-      showNotification(`Баланс пополнен на ${amount} ₽`);
-      
-      // Очистка полей
-      document.getElementById('cardNumber').value = '';
-      document.getElementById('cardExpiry').value = '';
-      document.getElementById('cardCvc').value = '';
-      
-    } else if (currentPaymentMethod === 'code') {
-      const promoCode = document.getElementById('promoCode').value;
-      const phoneNumber = document.getElementById('phoneNumber').value;
-      
-      if (!promoCode || !phoneNumber) {
-        showNotification('Заполните все поля', 'error');
-        return;
-      }
-      
-      // Симуляция проверки промо-кода
-      const validCodes = {
-        'WELCOME100': 100,
-        'CSGO500': 500,
-        'BONUS1000': 1000
-      };
-      
-      if (validCodes[promoCode]) {
-        const amount = validCodes[promoCode];
-        balance += amount;
-        updateBalanceOnAllTabs();
-        updateProfileStats();
-        saveGameData();
-        closePaymentModal();
-        showNotification(`Промо-код активирован! Баланс пополнен на ${amount} ₽`);
-        
-        // Очистка полей
-        document.getElementById('promoCode').value = '';
-        document.getElementById('phoneNumber').value = '';
-      } else {
-        showNotification('Неверный промо-код', 'error');
-      }
-    }
-  }
-
-  // Остальные функции (openCase, renderInventory, sellItem, etc.) остаются без изменений
-  // ... (они такие же как в предыдущем коде)
 
   // Функция открытия кейса
   function openCase(caseType) {
+    playSound('caseOpen');
     const caseData = casesData[caseType];
     if (!caseData) return;
     
-    if (balance < caseData.price) {
-      showNotification('Недостаточно средств для открытия кейса', 'error');
+    const totalCost = caseData.price * currentCaseAmount;
+    if (balance < totalCost) {
+      showNotification('Недостаточно средств для открытия кейсов', 'error');
       return;
     }
     
-    // Списываем стоимость кейса
-    balance -= caseData.price;
-    totalSpent += caseData.price;
-    openedCases++;
+    // Списываем стоимость кейсов
+    balance -= totalCost;
+    totalSpent += totalCost;
+    openedCases += currentCaseAmount;
     
     updateBalanceOnAllTabs();
     updateProfileStats();
     
-    // Выбираем случайный предмет из кейса
-    const randomItem = caseData.items[Math.floor(Math.random() * caseData.items.length)];
-    
-    // Добавляем предмет в инвентарь
-    const newItem = {
-      id: Date.now(),
-      name: randomItem.name,
-      rarity: randomItem.rarity,
-      price: randomItem.price,
-      image: randomItem.image,
-      case: caseData.name
-    };
-    inventory.push(newItem);
+    // Открываем кейсы
+    const openedItems = [];
+    for (let i = 0; i < currentCaseAmount; i++) {
+      const randomItem = caseData.items[Math.floor(Math.random() * caseData.items.length)];
+      const newItem = {
+        id: Date.now() + i,
+        name: randomItem.name,
+        rarity: randomItem.rarity,
+        price: randomItem.price,
+        image: randomItem.image,
+        case: caseData.name
+      };
+      inventory.push(newItem);
+      openedItems.push(newItem);
+    }
     
     // Сохраняем данные
     saveGameData();
     
     // Показываем анимацию открытия
-    showCaseOpening(caseData, newItem);
+    showCaseOpening(caseData, openedItems);
   }
 
-  // Функция показа анимации открытия кейса
-  function showCaseOpening(caseData, item) {
+  // Улучшенная анимация открытия кейса
+  function showCaseOpening(caseData, items) {
+    playSound('caseScroll');
     const caseOpening = document.getElementById('caseOpening');
     const scrollItems = document.getElementById('scrollItems');
     const openingCaseName = document.getElementById('openingCaseName');
+    const multiOpenResults = document.getElementById('multiOpenResults');
+    const openingResultText = document.getElementById('openingResultText');
     
     // Устанавливаем название кейса
-    openingCaseName.textContent = `Открытие ${caseData.name}`;
+    openingCaseName.textContent = `Открытие ${caseData.name} (${items.length}x)`;
     
+    // Скрываем мульти-результаты если открываем 1 кейс
+    if (items.length === 1) {
+      multiOpenResults.style.display = 'none';
+      openingResultText.style.display = 'block';
+    } else {
+      multiOpenResults.style.display = 'grid';
+      openingResultText.style.display = 'none';
+    }
+    
+    // Заполняем мульти-результаты
+    multiOpenResults.innerHTML = '';
+    items.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'multi-item';
+      itemElement.innerHTML = `
+        <div class="item-rarity ${item.rarity}"></div>
+        <div class="item-image" style="background-image: url('${item.image}')"></div>
+        <div class="item-name">${item.name}</div>
+        <div class="item-price">${item.price} ₽</div>
+      `;
+      multiOpenResults.appendChild(itemElement);
+    });
+
     // Создаем элементы для прокрутки
     scrollItems.innerHTML = '';
     const allItems = [...caseData.items, ...caseData.items, ...caseData.items];
@@ -1642,61 +1804,92 @@
     caseOpening.classList.add('active');
     
     // Запускаем анимацию прокрутки
-    setTimeout(() => {
-      const itemIndex = allItems.findIndex(i => i.name === item.name);
-      if (itemIndex !== -1) {
-        const scrollPosition = -itemIndex * 128;
-        scrollItems.style.transform = `translateX(${scrollPosition}px)`;
-      }
+    if (items.length === 1) {
+      startSingleCaseAnimation(scrollItems, caseData, items[0]);
+    } else {
+      startMultiCaseAnimation(scrollItems, caseData, items);
+    }
+  }
+
+  // Анимация для одного кейса
+  function startSingleCaseAnimation(scrollItems, caseData, winItem) {
+    const itemsCount = caseData.items.length * 3;
+    const scrollWidth = 148; // ширина одного предмета
+    const totalWidth = itemsCount * scrollWidth;
+    
+    // Находим позицию выигрышного предмета
+    const winIndex = caseData.items.findIndex(item => item.name === winItem.name);
+    const winPosition = (winIndex + caseData.items.length) * scrollWidth;
+    
+    let startTime = null;
+    const duration = 4000; // 4 секунды анимации
+    
+    function animate(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = (timestamp - startTime) / duration;
       
-      setTimeout(() => {
-        document.getElementById('revealedName').textContent = item.name;
-        document.getElementById('revealedRarity').className = 'item-rarity ' + item.rarity;
-        document.getElementById('revealedImage').style.backgroundImage = `url('${item.image}')`;
-        document.getElementById('revealedPrice').textContent = item.price + ' ₽';
-      }, 3500);
-    }, 100);
+      if (progress < 1) {
+        // Easing function - начинаем быстро, заканчиваем медленно
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const distance = winPosition + (totalWidth - winPosition) * easeOut;
+        scrollItems.style.transform = `translateX(-${distance}px)`;
+        requestAnimationFrame(animate);
+      } else {
+        // Конец анимации
+        scrollItems.style.transform = `translateX(-${winPosition}px)`;
+        setTimeout(() => {
+          revealWinner(winItem);
+          playSound('win');
+        }, 500);
+      }
+    }
+    
+    requestAnimationFrame(animate);
+  }
+
+  // Анимация для нескольких кейсов
+  function startMultiCaseAnimation(scrollItems, caseData, winItems) {
+    const itemsCount = caseData.items.length * 3;
+    const scrollWidth = 148;
+    const totalWidth = itemsCount * scrollWidth;
+    
+    let startTime = null;
+    const duration = 2000; // Укороченная анимация для мульти-открытия
+    
+    function animate(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = (timestamp - startTime) / duration;
+      
+      if (progress < 1) {
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const distance = totalWidth * easeOut;
+        scrollItems.style.transform = `translateX(-${distance}px)`;
+        requestAnimationFrame(animate);
+      } else {
+        scrollItems.style.transform = `translateX(-${totalWidth}px)`;
+        setTimeout(() => {
+          playSound('win');
+        }, 500);
+      }
+    }
+    
+    requestAnimationFrame(animate);
+  }
+
+  // Показать выигрыш
+  function revealWinner(item) {
+    document.getElementById('revealedName').textContent = item.name;
+    document.getElementById('revealedRarity').className = 'item-rarity ' + item.rarity;
+    document.getElementById('revealedImage').style.backgroundImage = `url('${item.image}')`;
+    document.getElementById('revealedPrice').textContent = item.price + ' ₽';
   }
 
   // Функция закрытия окна открытия кейса
   function closeCaseOpening() {
+    playSound('click');
     document.getElementById('caseOpening').classList.remove('active');
     renderInventory();
     updateProfileStats();
-  }
-
-  // Функция показа информации о кейсе
-  function showCaseInfo(caseType) {
-    const caseData = casesData[caseType];
-    if (!caseData) return;
-    
-    const modal = document.getElementById('caseInfoModal');
-    const caseDrops = document.getElementById('caseDrops');
-    
-    document.getElementById('modalCaseName').textContent = caseData.name;
-    document.getElementById('modalCaseDescription').textContent = caseData.description;
-    document.getElementById('modalCasePrice').textContent = caseData.price;
-    document.getElementById('modalCaseImage').style.backgroundImage = `url('${caseData.image}')`;
-    
-    caseDrops.innerHTML = '';
-    caseData.items.forEach(item => {
-      const dropElement = document.createElement('div');
-      dropElement.className = 'case-drop';
-      dropElement.innerHTML = `
-        <div class="drop-image" style="background-image: url('${item.image}')"></div>
-        <div class="drop-name">${item.name}</div>
-        <div class="drop-price">${item.price} ₽</div>
-        <div class="item-rarity ${item.rarity}"></div>
-      `;
-      caseDrops.appendChild(dropElement);
-    });
-    
-    modal.classList.add('active');
-  }
-
-  // Функция закрытия информации о кейсе
-  function closeCaseInfo() {
-    document.getElementById('caseInfoModal').classList.remove('active');
   }
 
   // Функция отрисовки инвентаря
@@ -1723,6 +1916,7 @@
 
   // Функция продажи предмета
   function sellItem(itemId) {
+    playSound('click');
     const itemIndex = inventory.findIndex(item => item.id === itemId);
     if (itemIndex !== -1) {
       const item = inventory[itemIndex];
@@ -1733,13 +1927,14 @@
         renderInventory();
         updateProfileStats();
         saveGameData();
-        showNotification(`Вы успешно продали "${item.name}" за ${item.price} ₽`);
+        showNotification(`✅ Вы успешно продали "${item.name}" за ${item.price} ₽`);
       }
     }
   }
 
   // Функция продажи всех предметов
   function sellAllItems() {
+    playSound('click');
     if (inventory.length === 0) {
       showNotification('В инвентаре нет предметов для продажи', 'error');
       return;
@@ -1756,21 +1951,150 @@
       renderInventory();
       updateProfileStats();
       saveGameData();
-      showNotification(`Вы успешно продали все предметы за ${totalPrice} ₽`);
+      showNotification(`✅ Вы успешно продали все предметы за ${totalPrice} ₽`);
     }
   }
 
   // Функция вывода предмета
   function withdrawItem(itemId) {
+    playSound('click');
     const item = inventory.find(item => item.id === itemId);
     if (item) {
-      showNotification(`Вывод предмета "${item.name}" временно недоступен`, 'error');
+      showNotification(`Вывод предмета "${item.name}" временно недоступен`, 'warning');
     }
   }
 
-  // Функция регистрации (заглушка)
+  // Активация промокода
+  function activatePromo() {
+    playSound('click');
+    const promoInput = document.getElementById('promoInput');
+    const code = promoInput.value.toUpperCase();
+    
+    if (!code) {
+      showNotification('Введите промокод', 'error');
+      return;
+    }
+    
+    if (promoCodes[code]) {
+      if (promoCodes[code].used) {
+        showNotification('Этот промокод уже использован', 'error');
+        return;
+      }
+      
+      const bonus = promoCodes[code].bonus;
+      balance += bonus;
+      promoCodes[code].used = true;
+      
+      updateBalanceOnAllTabs();
+      updateProfileStats();
+      saveGameData();
+      
+      promoInput.value = '';
+      showNotification(`🎉 Промокод "${code}" активирован! +${bonus}₽ на счету!`);
+      
+    } else {
+      showNotification('Неверный промокод', 'error');
+    }
+  }
+
+  // Платежная система
+  function showPaymentModal() {
+    playSound('click');
+    document.getElementById('paymentModal').classList.add('active');
+  }
+
+  function closePaymentModal() {
+    playSound('click');
+    document.getElementById('paymentModal').classList.remove('active');
+  }
+
+  function selectPaymentMethod(method) {
+    playSound('click');
+    currentPaymentMethod = method;
+    
+    document.querySelectorAll('.payment-method').forEach(el => {
+      el.classList.remove('active');
+    });
+    
+    event.target.closest('.payment-method').classList.add('active');
+    
+    document.querySelectorAll('.payment-inputs').forEach(el => {
+      el.classList.remove('active');
+    });
+    document.getElementById(method + 'Payment').classList.add('active');
+  }
+
+  function processPayment() {
+    playSound('click');
+    if (currentPaymentMethod === 'card') {
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardExpiry = document.getElementById('cardExpiry').value;
+      const cardCvc = document.getElementById('cardCvc').value;
+      const amount = parseInt(document.getElementById('cardAmount').value) || 0;
+      
+      if (!cardNumber || !cardExpiry || !cardCvc) {
+        showNotification('Заполните все поля карты', 'error');
+        return;
+      }
+      
+      if (amount < 10) {
+        showNotification('Минимальная сумма пополнения 10 ₽', 'error');
+        return;
+      }
+      
+      // Симуляция успешной оплаты
+      balance += amount;
+      updateBalanceOnAllTabs();
+      updateProfileStats();
+      saveGameData();
+      closePaymentModal();
+      showNotification(`✅ Баланс пополнен на ${amount} ₽`);
+      
+      // Очистка полей
+      document.getElementById('cardNumber').value = '';
+      document.getElementById('cardExpiry').value = '';
+      document.getElementById('cardCvc').value = '';
+      
+    } else if (currentPaymentMethod === 'code') {
+      const promoCode = document.getElementById('promoCode').value;
+      
+      if (!promoCode) {
+        showNotification('Введите промо-код', 'error');
+        return;
+      }
+      
+      // Симуляция проверки промо-кода
+      const validCodes = {
+        'WELCOME100': 100,
+        'CSGO500': 500,
+        'BONUS1000': 1000
+      };
+      
+      if (validCodes[promoCode]) {
+        const amount = validCodes[promoCode];
+        balance += amount;
+        updateBalanceOnAllTabs();
+        updateProfileStats();
+        saveGameData();
+        closePaymentModal();
+        showNotification(`✅ Промо-код активирован! Баланс пополнен на ${amount} ₽`);
+        
+        document.getElementById('promoCode').value = '';
+      } else {
+        showNotification('Неверный промо-код', 'error');
+      }
+    }
+  }
+
+  // Вспомогательные функции
+  function getItemImage(url) {
+    // Fallback для изображений
+    return url || 'https://via.placeholder.com/360x360/1a1a2e/8a6dff?text=CS:GO+SKIN';
+  }
+
   function showRegister() {
-    showNotification('Регистрация временно недоступна. Используйте вход через Steam', 'error');
+    playSound('click');
+    showNotification('Регистрация временно недоступна. Используйте вход через Steam', 'warning');
   }
 </script>
 </body>
